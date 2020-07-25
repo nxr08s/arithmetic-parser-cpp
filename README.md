@@ -19,10 +19,10 @@ All numbers represented as `double`. As numbers can be used all digits (0-9), de
 Parser using custom exception class `ParseException` which inherited by `std::runtime_error` exception class, and contains position where error occured (except division by zero, it always will be 0).
 
 ### Parsing arithmetic expression
-To divide source string by tokens, next transition table applies(it also uses to verify input string):
+To divide source string by tokens, following transition table applies(it also uses to verify input string):
 
 |      State	  |     +    |     -    |     *    |     /    |     ^    |     (    |    )    |  num . |    E e    |
-| --------------- | -------- | -------- | -------- | -------- | -------- | -------- | ------- | ------ | --------- |
+| :-------------- | :------: | :------: | :------: | :------: | :------: | :------: | :-----: | :----: | :-------: |
 | **in Operator** | Error    | Unary    | Error    | Error    | Error    | Operator | Error   | Number | Error     |
 | **in Number**   | Operator | Operator | Operator | Operator | Operator | Error    | Bracket | Number | E literal |
 | **in E literal**| Error    | Number   | Error    | Error    | Error    | Error    | Error   | Number | Error     |
