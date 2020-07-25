@@ -11,20 +11,21 @@
 </ul>
 <p><b>All numbers represented as 'double'.</b> As numbers can be used all digits (0-9), deciminal point(.) and letter e(lower and upper case). Note, that error in number (e.g. 12.5.54 ; 1.5e-4e.64) will be igored, but during parsing part of number from error pos and to the end will be cutted off (in previus examples .54 and e.64).</p>
 
-@. Parser using custom exception class 'ParseException' which inherited by 'std::runtime_error' exception, 
-	and contains position where error occured (except division by zero, it always will be 0).
+<p><b>Parser using custom exception class 'ParseException'</b> which inherited by 'std::runtime_error' exception, and contains position where error occured (except division by zero, it always will be 0).</p>
 
-@. Supposed, that 'ArithParser::Parser' object will be always created in 'try-catch' block to handle 
-	possible errors.
+<p><b>Supposed,</b> that 'ArithParser::Parser' object will be always created in 'try-catch' block to handle possible errors.</p>
 
-@. To divide source string by tokens, next transition table applies(it also uses to verify input string):
-
-		Legend:	Err	- error state
-				Opr	- in operator state
-				Num	- in number state
-				Brt	- in close bracket state
-				Unr	- in unary(minus) state
-				Enm - in E(e) literal(in number) state
+<strong>To divide source string by tokens, next transition table applies(it also uses to verify input string):</strong>
+<br>
+<b>Legend:</b>
+<ul>
+	<li>Err - error state</li>
+	<li>Opr - in operator state</li>
+	<li>Num - in number state</li>
+	<li>Brt - in close bracket state</li>
+	<li>Unr - in unary(minus) state</li>
+	<li>Enm - in E(e) literal(in number) state</li>
+</ul>
 		 ___________________________________________________________________________________
 		|	State	|	+	|	-	|	*	|	/	|	^	|	(	|	)	|  num .|	Ee	|
 		|___________|_______|_______|_______|_______|_______|_______|_______|_______|_______|
