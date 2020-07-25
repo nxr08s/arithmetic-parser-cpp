@@ -16,31 +16,85 @@
 <p><b>Supposed,</b> that 'ArithParser::Parser' object will be always created in 'try-catch' block to handle possible errors.</p>
 
 <strong>To divide source string by tokens, next transition table applies(it also uses to verify input string):</strong>
-<br>
-<b>Legend:</b>
-<ul>
-	<li>Err - error state</li>
-	<li>Opr - in operator state</li>
-	<li>Num - in number state</li>
-	<li>Brt - in close bracket state</li>
-	<li>Unr - in unary(minus) state</li>
-	<li>Enm - in E(e) literal(in number) state</li>
-</ul>
-		 ___________________________________________________________________________________
-		|	State	|	+	|	-	|	*	|	/	|	^	|	(	|	)	|  num .|	Ee	|
-		|___________|_______|_______|_______|_______|_______|_______|_______|_______|_______|
-		|	Opr		|	Err	|	Unr	|	Err	|	Err	|	Err	|	Opr	|	Err	|	Num	|	Err	|
-		|	Num		|	Opr	|	Opr	|	Opr	|	Opr	|	Opr	|	Err	|	Brt	|	Num	|	Enm	|
-		|	Enm		|	Err	|	Num	|	Err	|	Err	|	Err	|	Err	|	Err	|	Num	|	Err	|
-		|	Unr		|	Err	|	Err	|	Err	|	Err	|	Err	|	Opr	|	Err	|	Num	|	Err	|	
-		|	Brt		|	Opr	|	Opr	|	Opr	|	Opr	|	Opr	|	Err	|	Brt	|	Err	|	Err	|
-		|___________|_______|_______|_______|_______|_______|_______|_______|_______|_______|
-		
-@. If '_DEBUG' defined (in Visual Studio, in 'Debug' configuration it always defined automatically)
-	intermediate steps will be outputed in 'stdout'.
+<table>
+	<tr>
+		<th>State</th>
+		<th>+</th>
+		<th>-</th>
+		<th>*</th>
+		<th>/</th>
+		<th>^</th>
+		<th>(</th>
+		<th>)</th>
+		<th>num .</th>
+		<th>E e</th>
+	</tr>
+	<tr>
+		<td><b>in Operator</b></td>
+		<td>Error</td>
+		<td>Unary</td>
+		<td>Error</td>
+		<td>Error</td>
+		<td>Error</td>
+		<td>Operator</td>
+		<td>Error</td>
+		<td>Number</td>
+		<td>Error</td>
+	</tr>
+	<tr>
+		<td><b>in Number</b></td>
+		<td>Operator</td>
+		<td>Operator</td>
+		<td>Operator</td>
+		<td>Operator</td>
+		<td>Operator</td>
+		<td>Error</td>
+		<td>Bracket</td>
+		<td>Number</td>
+		<td>E literal</td>
+	</tr>
+	<tr>
+		<td><b>in E literal</b></td>
+		<td>Error</td>
+		<td>Number</td>
+		<td>Error</td>
+		<td>Error</td>
+		<td>Error</td>
+		<td>Error</td>
+		<td>Error</td>
+		<td>Number</td>
+		<td>Error</td>
+	</tr>
+	<tr>
+		<td><b>in Unary</b></td>
+		<td>Error</td>
+		<td>Error</td>
+		<td>Error</td>
+		<td>Error</td>
+		<td>Error</td>
+		<td>Operator</td>
+		<td>Error</td>
+		<td>Number</td>
+		<td>Error</td>
+	</tr>
+	<tr>
+		<td><b>in Bracket</b></td>
+		<td>Operator</td>
+		<td>Operator</td>
+		<td>Operator</td>
+		<td>Operator</td>
+		<td>Operator</td>
+		<td>Error</td>
+		<td>Bracket</td>
+		<td>Error</td>
+		<td>Error</td>
+	</tr>
+</table>
 
-@. Example of using this class:
-	
+<p><b>If '_DEBUG' defined</b> (in Visual Studio, in 'Debug' configuration it always defined automatically) intermediate steps will be outputed in 'stdout'. </p>
+
+<p><b>Example of using this class:</b></p>
+
 	...
 	#include <iostream>
 	#include "ArithParser.h"
@@ -54,10 +108,14 @@
 		std::cout << e.what() << ' ' << e.pos() << std::endl;
 	}
 	...
-		
-@. Issues:
 
-@. Todo:
-	@ 1e-5 interpreted as (1*10^-5) (test perfomance on each variant)
-	@ Make wrapper-function to Parser class to use w/o exceptions
-*/	
+<h3>Issues:</h3>
+<ul>
+	<li>Unexpected crushes (related to series of unary -)</li>
+</ul>
+
+<h3>Todo:</h3>
+<ul>
+	<li>1e-5 interpreted as (1*10^-5) (test perfomance on each variant)</li>
+	<li>Make wrapper-function to Parser class to use w/o exceptions</li>
+</ul>
