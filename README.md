@@ -1,13 +1,14 @@
-<h1>Pretty stupid arithmetic parser</h1>
-<strong>Parser can perform next operations:</strong>
-<ul>
-	<li>Addition <b><q>+</q></b></li>
-	<li>Substraction <b><q>-</q></b></li>
-	<li>Division <b><q>/</q></b> <em><br>note: division by zero cause throw 'ParseException' exception with pos = 0 (no matter where division perfroms)</em></li>
-	<li>Multiplication <b><q>*</q></b></li>
-	<li>Exponention <b><q>^</b></q></li>	
-	<li>Unary minus <b><q>-</b></q>	<em><br>note: in parser's internals, unary minus represented as '~' character; allowed only 1 unary minus in series (e.g. 2--1 allowed, 2---1 not allowed)</em></li>
-	<li>Brackets <b><q>()</q></b></li>
+# Pretty stupid arithmetic parser
+**Parser can perform next operations:**
+- Addition (+)
+- Substraction (-)
+- Division (/) 
+> note: division by zero cause throw 'ParseException' exception with pos = 0 (no matter where division perfroms)
+- Multiplication (*)
+- Exponention (^)	
+- Unary minus (-)	
+> note: in parser's internals, unary minus represented as '~' character; allowed only 1 unary minus in series (e.g. 2--1 allowed, 2---1 not allowed)
+- Brackets ( () )
 </ul>
 <p><b>All numbers represented as 'double'.</b> As numbers can be used all digits (0-9), deciminal point(.) and letter e(lower and upper case). Note, that error in number (e.g. 12.5.54 ; 1.5e-4e.64) will be igored, but during parsing part of number from error pos and to the end will be cutted off (in previus examples .54 and e.64).</p>
 
