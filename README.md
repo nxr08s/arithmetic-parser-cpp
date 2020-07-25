@@ -1,5 +1,8 @@
-# Pretty stupid arithmetic parser
-**Parser can perform next operations:**
+# Pretty dumb arithmetic parser
+
+### Operations
+
+**Parser can perform following operations:**
 - Addition (+)
 - Substraction (-)
 - Division (/) 
@@ -9,91 +12,29 @@
 - Unary minus (-)	
 > note: in parser's internals, unary minus represented as '~' character; allowed only 1 unary minus in series (e.g. 2--1 allowed, 2---1 not allowed)
 - Brackets ( () )
-</ul>
-<p><b>All numbers represented as 'double'.</b> As numbers can be used all digits (0-9), deciminal point(.) and letter e(lower and upper case). Note, that error in number (e.g. 12.5.54 ; 1.5e-4e.64) will be igored, but during parsing part of number from error pos and to the end will be cutted off (in previus examples .54 and e.64).</p>
 
-<p><b>Parser using custom exception class 'ParseException'</b> which inherited by 'std::runtime_error' exception, and contains position where error occured (except division by zero, it always will be 0).</p>
+### Numbers
 
-<p><b>Supposed,</b> that 'ArithParser::Parser' object will be always created in 'try-catch' block to handle possible errors.</p>
+All numbers represented as 'double'. As numbers can be used all digits (0-9), deciminal point(.) and letter e(lower and upper case). Note, that error in number (e.g. 12.5.54 ; 1.5e-4e.64) will be igored, but during parsing part of number from error pos and to the end will be cutted off (in previus examples .54 and e.64).
 
-<strong>To divide source string by tokens, next transition table applies(it also uses to verify input string):</strong>
-<table>
-	<tr>
-		<th>State</th>
-		<th>+</th>
-		<th>-</th>
-		<th>*</th>
-		<th>/</th>
-		<th>^</th>
-		<th>(</th>
-		<th>)</th>
-		<th>num .</th>
-		<th>E e</th>
-	</tr>
-	<tr>
-		<td><b>in Operator</b></td>
-		<td>Error</td>
-		<td>Unary</td>
-		<td>Error</td>
-		<td>Error</td>
-		<td>Error</td>
-		<td>Operator</td>
-		<td>Error</td>
-		<td>Number</td>
-		<td>Error</td>
-	</tr>
-	<tr>
-		<td><b>in Number</b></td>
-		<td>Operator</td>
-		<td>Operator</td>
-		<td>Operator</td>
-		<td>Operator</td>
-		<td>Operator</td>
-		<td>Error</td>
-		<td>Bracket</td>
-		<td>Number</td>
-		<td>E literal</td>
-	</tr>
-	<tr>
-		<td><b>in E literal</b></td>
-		<td>Error</td>
-		<td>Number</td>
-		<td>Error</td>
-		<td>Error</td>
-		<td>Error</td>
-		<td>Error</td>
-		<td>Error</td>
-		<td>Number</td>
-		<td>Error</td>
-	</tr>
-	<tr>
-		<td><b>in Unary</b></td>
-		<td>Error</td>
-		<td>Error</td>
-		<td>Error</td>
-		<td>Error</td>
-		<td>Error</td>
-		<td>Operator</td>
-		<td>Error</td>
-		<td>Number</td>
-		<td>Error</td>
-	</tr>
-	<tr>
-		<td><b>in Bracket</b></td>
-		<td>Operator</td>
-		<td>Operator</td>
-		<td>Operator</td>
-		<td>Operator</td>
-		<td>Operator</td>
-		<td>Error</td>
-		<td>Bracket</td>
-		<td>Error</td>
-		<td>Error</td>
-	</tr>
-</table>
+### Exceptions
+Parser using custom exception class 'ParseException' which inherited by 'std::runtime_error' exception class, and contains position where error occured (except division by zero, it always will be 0).
+
+### Parsing arithmetic expression
+To divide source string by tokens, next transition table applies(it also uses to verify input string):
+
+| State | + | - | *	| / | ^ | ( | ) | num . | Ee |
+| - | - | - | - | - | - | - | - | - | - |
+|	Opr		|	Err	|	Unr	|	Err	|	Err	|	Err	|	Opr	|	Err	|	Num	|	Err	|
+|	Num		|	Opr	|	Opr	|	Opr	|	Opr	|	Opr	|	Err	|	Brt	|	Num	|	Enm	|
+|	Enm		|	Err	|	Num	|	Err	|	Err	|	Err	|	Err	|	Err	|	Num	|	Err	|
+|	Unr		|	Err	|	Err	|	Err	|	Err	|	Err	|	Opr	|	Err	|	Num	|	Err	|	
+|	Brt		|	Opr	|	Opr	|	Opr	|	Opr	|	Opr	|	Err	|	Brt	|	Err	|	Err	|
+
+# divider
 
 <p><b>If '_DEBUG' defined</b> (in Visual Studio, in 'Debug' configuration it always defined automatically) intermediate steps will be outputed in 'stdout'. </p>
-
+<p><b>Supposed,</b> that 'ArithParser::Parser' object will be always created in 'try-catch' block to handle possible errors.</p>
 <p><b>Example of using this class:</b></p>
 
 	...
