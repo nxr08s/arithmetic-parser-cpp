@@ -23,15 +23,13 @@ Parser using custom exception class 'ParseException' which inherited by 'std::ru
 ### Parsing arithmetic expression
 To divide source string by tokens, next transition table applies(it also uses to verify input string):
 
-| State | + | - | *	| / | ^ | ( | ) | num . | Ee |
-| - | - | - | - | - | - | - | - | - | - |
-|	Opr		|	Err	|	Unr	|	Err	|	Err	|	Err	|	Opr	|	Err	|	Num	|	Err	|
-|	Num		|	Opr	|	Opr	|	Opr	|	Opr	|	Opr	|	Err	|	Brt	|	Num	|	Enm	|
-|	Enm		|	Err	|	Num	|	Err	|	Err	|	Err	|	Err	|	Err	|	Num	|	Err	|
-|	Unr		|	Err	|	Err	|	Err	|	Err	|	Err	|	Opr	|	Err	|	Num	|	Err	|	
-|	Brt		|	Opr	|	Opr	|	Opr	|	Opr	|	Opr	|	Err	|	Brt	|	Err	|	Err	|
-
-# divider
+|      State	  |     +    |     -    |     *    |     /    |     ^    |     (    |    )    |  num . |    E e    |
+| --------------- | -------- | -------- | -------- | -------- | -------- | -------- | ------- | ------ | --------- |
+| **in Operator** | Error    | Unary    | Error    | Error    | Error    | Operator | Error   | Number | Error     |
+| **in Number**   | Operator | Operator | Operator | Operator | Operator | Error    | Bracket | Number | E literal |
+| **in E literal**| Error    | Number   | Error    | Error    | Error    | Error    | Error   | Number | Error     |
+| **in Unary** 	  | Error    | Error    | Error    | Error    | Error    | Operator | Error   | Number | Error     |	
+| **in Bracket**  | Operator | Operator | Operator | Operator | Operator | Error    | Bracket | Error  | Error     |
 
 <p><b>If '_DEBUG' defined</b> (in Visual Studio, in 'Debug' configuration it always defined automatically) intermediate steps will be outputed in 'stdout'. </p>
 <p><b>Supposed,</b> that 'ArithParser::Parser' object will be always created in 'try-catch' block to handle possible errors.</p>
@@ -51,13 +49,9 @@ To divide source string by tokens, next transition table applies(it also uses to
 	}
 	...
 
-<h3>Issues:</h3>
-<ul>
-	<li>Unexpected crushes (related to series of unary -)</li>
-</ul>
+## Issues:
+- [ ] Unexpected crushes (related to series of unary -)
 
-<h3>Todo:</h3>
-<ul>
-	<li>1e-5 interpreted as (1*10^-5) (test perfomance on each variant)</li>
-	<li>Make wrapper-function to Parser class to use w/o exceptions</li>
-</ul>
+## Todo:
+- [ ] 1e-5 interpreted as (1*10^-5) (test perfomance on each variant)
+- [ ] Make wrapper-function to Parser class to use w/o exceptions
