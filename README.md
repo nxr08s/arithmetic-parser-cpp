@@ -4,13 +4,13 @@
 **Parser can perform following operations:**
 - Addition (+)
 - Substraction (-)
-- Division (/) 
+- Division (/)
+> note: division by zero cause throw ``ParseException`` exception with pos = 0 (no matter where division perfroms)
 - Multiplication (*)
 - Exponention (^)	
-- Unary minus (-)	
-- Brackets ( () )
-> note: division by zero cause throw ``ParseException`` exception with pos = 0 (no matter where division perfroms)
+- Unary minus (-)
 > note: in parser's internals, unary minus represented as '~' character; allowed only 1 unary minus in series (e.g. 2--1 allowed, 2---1 not allowed)
+- Brackets ( () )
 
 ### Numbers
 All numbers represented as ``double``. As numbers can be used all digits (0-9), deciminal point(.) and letter e(lower and upper case). Note, that error in number (e.g. 12.5.54 ; 1.5e-4e.64) will be igored, but during parsing part of number from error pos and to the end will be cutted off (in previus examples .54 and e.64).
@@ -35,7 +35,6 @@ If ``_DEBUG`` defined (in Visual Studio, in ``Debug`` configuration it always de
 
 **Example of using this class:**
 ```c++
-...
 #include <iostream>
 #include "ArithParser.h"
 ...
